@@ -1,10 +1,10 @@
 {
   "extName": {
-    "message": "DPbuster",
+    "message": "EthiGuard",
     "description": "The name of the extension."
   },
   "extDescription": {
-    "message": "Detects and highlights different Dark Patterns on websites.",
+    "message": "DPBH hackathon 2024 prototype.",
     "description": "The description of the extension."
   },
   "errorInvalidConfig": {

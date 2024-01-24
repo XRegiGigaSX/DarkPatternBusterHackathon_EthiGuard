@@ -162,7 +162,7 @@ export const onOffSwitchStyles = css`
         }
     
         .onoffswitch-inner:before {
-            background-color: #33bfde;
+            background-color: #b6f2e7;
             color: #000000;
         }
     }
