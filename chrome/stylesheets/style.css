@@ -1,0 +1,30 @@
+.__ph__pattern-detected {
+    /** background-color: red !important; **/
+    border: 2px solid black !important;
+}
+
+.__ph__current-pattern {
+    z-index: 10000 !important;
+    box-shadow: 0 0 120px 150px black;
+    animation: __ph__highlight 5s;
+    opacity: 0;
+}
+
+@keyframes __ph__highlight {
+    0% {
+        opacity: 0.75;
+        box-shadow: 0 0 120px 150px red;
+    }25%{
+        opacity: 0.75;
+        box-shadow: 0 0 120px 150px blue;
+    }50%{
+        opacity: 0.75;
+        box-shadow: 0 0 120px 150px red;
+    }75%{
+        opacity: 0.75;
+        box-shadow: 0 0 120px 150px blue;
+    }100%{
+        opacity: 0;
+        box-shadow: 0 0 120px 150px red;
+    }
+}
