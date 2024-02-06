@@ -4,7 +4,7 @@ let phidToPatternTypeMap = {};
 
 initPatternHighlighter();
 
-async function initPatternHighlighter(){
+async function initPatternHighlighter() {
     const activationState = await brw.runtime.sendMessage({ action: "getActivationState" });
     if (activationState.isEnabled === true) {
         constants = await import(await brw.runtime.getURL("scripts/constants.js"));
@@ -137,6 +137,7 @@ function elementIsVisible(elem) {
     return !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length);
 };
 
+let prevPatternCount = 0;
 function getPatternsResults() {
     let results = {
         "patterns": [],
@@ -161,6 +162,23 @@ function getPatternsResults() {
         results.countVisible += elementsVisible.length;
         results.count += elementsVisible.length + elementsHidden.length;
     }
+
+    const patternCount = results['count'];
+
+    if(prevPatternCount != patternCount){
+        if (patternCount > 30) {
+            speak("Highly dangerous patterns detected on the page. Please be cautious.");
+        } else if (patternCount > 10) {
+            speak("Multiple patterns detected on the page. Exercise caution.");
+        } else {
+            speak("The page seems usable with fewer detected patterns.");
+        }
+        speak("Current number of patterns is " + patternCount);
+        prevPatternCount = patternCount;
+    }
+    
+    console.log("speaking")
+
     return results;
 }
 
@@ -215,3 +233,7 @@ function showElement(phid) {
     }, 10000);
 }
 
+function speak(message) {
+    const utterance = new SpeechSynthesisUtterance(message);
+    speechSynthesis.speak(utterance);
+}
