@@ -399,7 +399,7 @@ export class FoundPatternsList extends LitElement {
                     </li>`;
         })}
             </ul>
-            <a target="_blank" style="color: red" href="https://darkpatternstipline.org/report/"> Report this to authorities here!</a>
+            <a target="_blank" style="color: red" href="https://darkpatternstipline.org/report/"> ${this.results.countVisible ? "Report this to authorities here!" : "No anomalies detected. Have a great day!"}</a>
 
         </div>
       `;

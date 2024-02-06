@@ -10,21 +10,57 @@
     opacity: 0;
 }
 
+.pattern-box{
+    /* height: 2em;
+    width: 5em; */
+    font-size: 1.6em;
+    width: auto;
+    height: auto;
+    padding: 0.4em;
+    border-radius: 0.2em;
+    border: 2px solid grey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* padding: 0.2em; */
+    /* position: fixed;
+    bottom: 2em;
+    left: 48%; */
+    z-index: 1000000 !important;
+    background-color: black;
+    color: white;
+    animation: patternAnim 10s;
+    opacity: 0;
+}
+
+@keyframes patternAnim {
+    0%{
+        opacity: 0;
+        transform: translate(0px);
+    }30%{
+        opacity: 1;
+        transform: translate(0, 2em);
+    }100%{
+        opacity: 1;
+        transform: translate(0, 2em);
+    }
+}
+
 @keyframes __ph__highlight {
     0% {
         opacity: 0.75;
-        box-shadow: 0 0 120px 150px red;
+        box-shadow: 0 0 120px 150px rgb(0, 0, 0);
     }25%{
         opacity: 0.75;
-        box-shadow: 0 0 120px 150px blue;
+        box-shadow: 0 0 150px 120px rgb(0, 0, 0);
     }50%{
         opacity: 0.75;
-        box-shadow: 0 0 120px 150px red;
+        box-shadow: 0 0 120px 150px rgb(0, 0, 0);
     }75%{
         opacity: 0.75;
-        box-shadow: 0 0 120px 150px blue;
+        box-shadow: 0 0 150px 120px rgb(0, 0, 0);
     }100%{
         opacity: 0;
-        box-shadow: 0 0 120px 150px red;
+        box-shadow: 0 0 120px 150px rgb(0, 0, 0);
     }
 }

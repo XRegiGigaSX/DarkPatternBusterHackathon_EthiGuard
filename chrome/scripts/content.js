@@ -12,6 +12,9 @@ const brw = chrome;
  */
 let constants;
 
+// This will be used to map DARK PATTERN type to PHID
+let phidToPatternTypeMap = {};
+
 // Initialize the extension.
 initPatternHighlighter();
 
@@ -51,6 +54,7 @@ async function initPatternHighlighter(){
         // Listen for messages from the popup.
         brw.runtime.onMessage.addListener(
             function (message, sender, sendResponse) {
+                console.log(message);
                 // Check which action is requested by the popup.
                 if (message.action === "getPatternCount") {
                     // Compute the pattern statistics/counts and send the result as response.
@@ -235,6 +239,41 @@ function findPatterInNode(node, nodeOld) {
  * @param {Node} node A DOM node or a complete DOM tree in which to search for patterns.
  * @param {Node} domOld The complete previous state of the DOM tree of the page.
  */
+// function findPatternDeep(node, domOld) {
+//     // Iterate over all child nodes of the provided DOM node.
+//     for (const child of node.children) {
+//         // Execute the function recursively on each child node.
+//         findPatternDeep(child, domOld);
+//     }
+
+//     // Extract the previous state of the node from the old DOM. Is `null` if the node did not exist yet.
+//     let nodeOld = getElementByPhid(domOld, node.dataset.phid);
+//     // Check if the node represents one of the patterns.
+//     let foundPattern = findPatterInNode(node, nodeOld);
+
+//     // If a pattern is detected, add appropriate classes to the element
+//     // and remove it from the DOM for the further pattern search.
+//     if (foundPattern) {
+//         // Find the element in the original DOM.
+//         let elem = getElementByPhid(document, node.dataset.phid);
+//         // Check if the element still exists.
+//         if (elem) {
+//             // Add a general class for patterns to the element
+//             // and a class for the specific pattern the element represents.
+//             elem.classList.add(
+//                 constants.patternDetectedClassName,
+//                 constants.extensionClassPrefix + foundPattern
+//             );
+//         }
+//         // Remove the previous state of the node, if it exists.
+//         if (nodeOld) {
+//             nodeOld.remove();
+//         }
+//         // Remove the current state of the node.
+//         node.remove();
+//     }
+// }
+
 function findPatternDeep(node, domOld) {
     // Iterate over all child nodes of the provided DOM node.
     for (const child of node.children) {
@@ -252,6 +291,7 @@ function findPatternDeep(node, domOld) {
     if (foundPattern) {
         // Find the element in the original DOM.
         let elem = getElementByPhid(document, node.dataset.phid);
+        phidToPatternTypeMap[node.dataset.phid] = foundPattern;
         // Check if the element still exists.
         if (elem) {
             // Add a general class for patterns to the element
@@ -407,6 +447,8 @@ function showElement(phid) {
 
     // Get the element to be shown by its ID.
     let elem = getElementByPhid(document, phid);
+    console.log(elem)
+    console.log(phid)
 
     // Check if the element with the `phid` exists or if no element with the ID was found.
     if (elem == null) {
@@ -440,4 +482,20 @@ function showElement(phid) {
 
     // Add the shadow element to the DOM.
     document.body.appendChild(highlightShadowElem);
+
+    let patternType = phidToPatternTypeMap[phid];
+    // Create a new element to represent the detected pattern.
+    let patternBox = document.createElement("div");
+    patternBox.textContent = "☝️ " + patternType + " pattern found"
+    patternBox.style.position = "absolute"
+    patternBox.style.top = elemXY.top + "px";
+    patternBox.style.left = elemXY.left + "px";
+    patternBox.classList.add('pattern-box');
+
+    // Append the pattern box to the document.
+    document.body.appendChild(patternBox);
+
+    setTimeout(() => {
+        patternBox.remove();
+    }, 10000);
 }
