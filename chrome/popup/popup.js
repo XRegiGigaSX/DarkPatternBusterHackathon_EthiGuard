@@ -157,9 +157,8 @@ export class ExtensionPopup extends LitElement {
             <on-off-switch .activation=${this.activation} .app=${this}></on-off-switch>
             <refresh-button .hide=${this.activation === this.initActivation} .app=${this}></refresh-button>
             <redo-button .activation=${this.initActivation}></redo-button>
-            <found-patterns-list .activation=${this.initActivation} .results=${this.results}></found-patterns-list>
             <show-pattern-button .activation=${this.initActivation} .results=${this.results}></show-pattern-button>
-            <supported-patterns-list></supported-patterns-list>
+            <found-patterns-list .activation=${this.initActivation} .results=${this.results}></found-patterns-list>
             <popup-footer></popup-footer>
         `;
     }
@@ -615,7 +614,7 @@ export class ShowPatternButtons extends LitElement {
             <span class="button" @click=${this.showPreviousPattern}>⏮️</span>
             <span>${brw.i18n.getMessage("showPatternState", [this.getCurrentPatternNumber(), this.results.countVisible.toString()])}</span>
             <span class="button" @click=${this.showNextPattern}>⏭️</span>
-            ${this.getCurrentPatternText()}
+            
         </div>
       `;
     }
