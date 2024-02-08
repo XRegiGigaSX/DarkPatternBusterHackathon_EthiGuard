@@ -236,7 +236,10 @@ export class OnOffSwitch extends LitElement {
      */
     render() {
         return html`
-        <div>
+        <div class="buttons-div">
+        
+
+
             <input type="checkbox" id="main-onoffswitch" tabindex="0"
                 @change=${this.changeActivation}
                 .checked=${this.activation === activationState.On}
@@ -245,6 +248,8 @@ export class OnOffSwitch extends LitElement {
                 <span class="onoffswitch-inner"></span>
                 <span class="onoffswitch-switch"></span>
             </label>
+
+            
             
         </div>
       `;
@@ -398,7 +403,7 @@ export class FoundPatternsList extends LitElement {
                     </li>`;
         })}
             </ul>
-            <a target="_blank" style="color: red" href="https://darkpatternstipline.org/report/"> ${this.results.countVisible ? "Report this to authorities here!" : "No anomalies detected. Have a great day!"}</a>
+            <a target="_blank" style="color: ${this.results.countVisible ? "red" : "green"}" href="https://darkpatternstipline.org/report/"> ${this.results.countVisible ? "Report this to authorities here!" : "No anomalies detected. Have a great day!"}</a>
 
         </div>
       `;
@@ -611,9 +616,9 @@ export class ShowPatternButtons extends LitElement {
         return html`
         <div>
             <h2>${brw.i18n.getMessage("headingShowPattern")}</h2>
-            <span class="button" @click=${this.showPreviousPattern}>⏮️</span>
+            <span class="button" @click=${this.showPreviousPattern}>&#x2906;</span>
             <span>${brw.i18n.getMessage("showPatternState", [this.getCurrentPatternNumber(), this.results.countVisible.toString()])}</span>
-            <span class="button" @click=${this.showNextPattern}>⏭️</span>
+            <span class="button" @click=${this.showNextPattern}>&#x2907;</span>
             
         </div>
       `;

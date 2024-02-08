@@ -137,7 +137,7 @@ function elementIsVisible(elem) {
     return !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length);
 };
 
-let prevPatternCount = 0;
+let prevPatternCount = -1;
 function getPatternsResults() {
     let results = {
         "patterns": [],
@@ -170,14 +170,16 @@ function getPatternsResults() {
             speak("Highly dangerous patterns detected on the page. Please be cautious.");
         } else if (patternCount > 10) {
             speak("Multiple patterns detected on the page. Exercise caution.");
-        } else {
+        } else if (patternCount <= 10) {
             speak("The page seems usable with fewer detected patterns.");
+        }else{
+            speak("This site is free of dark patterns.")
         }
         speak("Current number of patterns is " + patternCount);
         prevPatternCount = patternCount;
+        // console.log("speaking")
     }
     
-    console.log("speaking")
 
     return results;
 }
