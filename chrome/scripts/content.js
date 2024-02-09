@@ -224,6 +224,7 @@ function showElement(phid) {
     let patternType = phidToPatternTypeMap[phid];
     let patternBox = document.createElement("div");
     patternBox.textContent = "☝️ " + patternType + " pattern found"
+    patternBox.classList.add('pb-font');
     patternBox.style.position = "absolute"
     patternBox.style.top = elemXY.top + "px";
     patternBox.style.left = elemXY.left + "px";

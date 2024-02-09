@@ -10,6 +10,10 @@
     opacity: 0;
 }
 
+.pb-font {
+    font-family: 'Orbitron', sans-serif;
+}
+
 .pattern-box{
     /* height: 2em;
     width: 5em; */

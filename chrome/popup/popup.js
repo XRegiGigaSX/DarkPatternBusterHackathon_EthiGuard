@@ -158,7 +158,6 @@ export class ExtensionPopup extends LitElement {
             <refresh-button .hide=${this.activation === this.initActivation} .app=${this}></refresh-button>
             <redo-button .activation=${this.initActivation}></redo-button>
             <show-pattern-button .activation=${this.initActivation} .results=${this.results}></show-pattern-button>
-            <found-patterns-list .activation=${this.initActivation} .results=${this.results}></found-patterns-list>
             <popup-footer></popup-footer>
         `;
     }
@@ -237,8 +236,6 @@ export class OnOffSwitch extends LitElement {
     render() {
         return html`
         <div class="buttons-div">
-        
-
 
             <input type="checkbox" id="main-onoffswitch" tabindex="0"
                 @change=${this.changeActivation}
@@ -247,10 +244,13 @@ export class OnOffSwitch extends LitElement {
             <label for="main-onoffswitch">
                 <span class="onoffswitch-inner"></span>
                 <span class="onoffswitch-switch"></span>
-            </label>
-
+            </label>    
             
-            
+        </div>
+        <div class="cyborg-container">
+            <button class="cyborg-button">Mitigation Toggle</button>
+            <input type="checkbox" class="cyborg-checkbox" id="sciFiCheckbox">
+            <label for="sciFiCheckbox" class="cyborg-label">Voice Assistance</label>
         </div>
       `;
     }

@@ -260,7 +260,6 @@ export const onOffSwitchStyles = css`
         bottom: 0;
         right: 80px;
         border: 2px solid #000000;
-        border-radius: 8px;
         z-index: 2;
         transition: right 0.3s ease-in-out;
         transform: skew(-20deg);
@@ -273,6 +272,68 @@ export const onOffSwitchStyles = css`
     input:checked+label .onoffswitch-switch {
         right: 0px;
     }
+
+    .button-div2 {
+        width: 90%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .cyborg-container {
+        text-align: center;
+        width: 90%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        font-family: 'Orbitron', sans-serif;
+    }
+
+    .cyborg-button,
+    .cyborg-checkbox {
+        border: none;
+        border-radius: 0 !important;
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #b6b6b6;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    .cyborg-button {
+        background-color: cyan;
+        display: inline-block;
+        margin-bottom: 20px;
+        scale: 0.7;
+        color: black;
+    }
+
+    .cyborg-checkbox {
+        display: none;
+        font-family: 'Orbitron', sans-serif;
+    }
+
+    .cyborg-label {
+        background-color: #343a40;
+        border-radius: 0 !important;
+        padding: 10px 20px;
+        font-size: 14px;
+        color: #b6b6b6;
+        cursor: pointer;
+        display: inline-block;
+        transform: skew(-20deg);
+        font-family: 'Orbitron', sans-serif;
+        scale: 0.8;
+        transform: translateY(-16px)
+    }
+
+    .cyborg-checkbox:checked + .cyborg-label {
+        background-color: #dc3545;
+        font-family: 'Orbitron', sans-serif;
+    }
+
 
     @media (prefers-color-scheme: dark) { 
         
@@ -292,16 +353,3 @@ export const onOffSwitchStyles = css`
         }
     }
 `;
-
-
-// Import the required components from the Lit Library 
-// import { css, unsafeCSS } from '../scripts/lit/lit-core.min.js';
-
-/**
- * The object to access the API functions of the browser.
-//  * @constant
-//  * @type {{runtime: object, tabs: object, i18n: object}} BrowserAPI
- */
-// const brw = chrome;
-
-
