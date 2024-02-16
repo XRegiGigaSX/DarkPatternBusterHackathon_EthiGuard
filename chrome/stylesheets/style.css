@@ -33,7 +33,7 @@
     z-index: 1000000 !important;
     background-color: black;
     color: white;
-    animation: patternAnim 10s;
+    animation: patternAnim 100s;
     opacity: 0;
 }
 
@@ -41,7 +41,7 @@
     0%{
         opacity: 0;
         transform: translate(0px);
-    }30%{
+    }5%{
         opacity: 1;
         transform: translate(0, 2em);
     }100%{

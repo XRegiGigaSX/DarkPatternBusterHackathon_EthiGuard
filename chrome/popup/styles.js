@@ -316,17 +316,17 @@ export const onOffSwitchStyles = css`
     }
 
     .cyborg-label {
-        background-color: #343a40;
+        background-color: #34dc34;
         border-radius: 0 !important;
         padding: 10px 20px;
         font-size: 14px;
-        color: #b6b6b6;
+        color: black;
         cursor: pointer;
         display: inline-block;
-        transform: skew(-20deg);
+        transform: translateY(-12px);
         font-family: 'Orbitron', sans-serif;
         scale: 0.8;
-        transform: translateY(-16px)
+        
     }
 
     .cyborg-checkbox:checked + .cyborg-label {

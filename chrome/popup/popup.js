@@ -229,6 +229,20 @@ export class OnOffSwitch extends LitElement {
         }
     }
 
+    async handleMitigationToggle(e) {
+        // alert("here 1")
+        const currentTab = await getCurrentTab();
+    
+        // Send a message to content.js indicating the mitigation toggle action.
+        brw.tabs.sendMessage(currentTab.id, { action: "mitigationToggle" });
+    }
+
+    async handleVoice(){
+        // alert("here 1")
+        const currentTab = await getCurrentTab();
+        brw.tabs.sendMessage(currentTab.id, { action: "voiceAssist" });
+    }
+
     /**
      * Render the HTML of the component.
      * @returns {html} HTML of the component
@@ -236,7 +250,6 @@ export class OnOffSwitch extends LitElement {
     render() {
         return html`
         <div class="buttons-div">
-
             <input type="checkbox" id="main-onoffswitch" tabindex="0"
                 @change=${this.changeActivation}
                 .checked=${this.activation === activationState.On}
@@ -245,11 +258,10 @@ export class OnOffSwitch extends LitElement {
                 <span class="onoffswitch-inner"></span>
                 <span class="onoffswitch-switch"></span>
             </label>    
-            
         </div>
         <div class="cyborg-container">
-            <button class="cyborg-button">Mitigation Toggle</button>
-            <input type="checkbox" class="cyborg-checkbox" id="sciFiCheckbox">
+            <button class="cyborg-button" @click=${this.handleMitigationToggle}>Mitigation Toggle</button>
+            <input type="checkbox" id="sciFiCheckbox" class="cyborg-checkbox" @click=${this.handleVoice}>
             <label for="sciFiCheckbox" class="cyborg-label">Voice Assistance</label>
         </div>
       `;
@@ -285,6 +297,8 @@ export class RefreshButton extends LitElement {
         await brw.runtime.sendMessage({ "enableExtension": this.app.activation === activationState.On, "tabId": (await getCurrentTab()).id });
         // Reload the current tab.
         await brw.tabs.reload();
+
+        
         // Set the initial activation state of the popup to the new activation state.
         this.app.initActivation = this.app.activation;
     }
@@ -301,6 +315,7 @@ export class RefreshButton extends LitElement {
         return html`
         <div>
             <span @click=${this.refreshTab}>${brw.i18n.getMessage("buttonReloadPageForChange")}</span>
+            
         </div>
         `;
     }
@@ -345,7 +360,7 @@ export class RedoButton extends LitElement {
         return html`
         <div>
             <p @click=${this.redoPatternCheck}>${brw.i18n.getMessage("buttonRedoPatternCheck")}</p>
-            
+            <span><a>Click here for detailed price history</a></span>
         </div>
       `;
     }

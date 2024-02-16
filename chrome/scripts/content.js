@@ -1,5 +1,6 @@
 const brw = chrome;
 let constants;
+var voiceAssistance = 1;
 let phidToPatternTypeMap = {};
 
 initPatternHighlighter();
@@ -25,10 +26,42 @@ async function initPatternHighlighter() {
                 showElement(message.showElement);
                 sendResponse({ success: true });
             }
+            // console.log('I AM HERE 1')
+            talker();
         });
     } else {
         console.log(brw.i18n.getMessage("infoExtensionDisabled"))
     }
+}
+
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    if (message.action === "mitigationToggle") {
+        // alert("here 3")
+        // Call the function in content.js that you want to execute on mitigation toggle.
+        handleMitigationToggle();
+    } else if (message.action === "voiceAssist"){
+        // alert("in content")
+        handleVoiceAssist()
+    }
+});
+
+function handleVoiceAssist(e){
+    // alert("in function")
+    // e.preventDefault();
+    voiceAssistance = voiceAssistance ? 0 : 1;
+    // alert("here 2 "+ voiceAssistance)
+}
+
+function handleMitigationToggle(e) {
+    // e.preventDefault();
+    // const currentTab = await getCurrentTab();
+    // const currentTabCheckboxes = document.querySelectorAll(`[type="checkbox"][data-tab-id="${currentTab.id}"]:checked`);
+    // alert("inside mitigation")
+    const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+    
+    allCheckboxes.forEach((checkbox) => {
+        checkbox.checked = false;
+    });
 }
 
 const observer = new MutationObserver(async function () {
@@ -137,7 +170,6 @@ function elementIsVisible(elem) {
     return !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length);
 };
 
-let prevPatternCount = -1;
 function getPatternsResults() {
     let results = {
         "patterns": [],
@@ -162,27 +194,35 @@ function getPatternsResults() {
         results.countVisible += elementsVisible.length;
         results.count += elementsVisible.length + elementsHidden.length;
     }
+    
+    talker();
 
-    const patternCount = results['count'];
+    return results;
+}
 
-    if(prevPatternCount != patternCount){
+
+let prevPatternCount = -1;
+function talker(){
+    const patternCount = Object.keys(phidToPatternTypeMap).length;
+    console.log(patternCount + " is the current pattern count map size")
+    // alert("here 2 " + voiceAssistance)
+    if(prevPatternCount != patternCount & voiceAssistance){
         if (patternCount > 30) {
             speak("Highly dangerous patterns detected on the page. Please be cautious.");
-        } else if (patternCount > 10) {
+        } else if (patternCount >= 10) {
             speak("Multiple patterns detected on the page. Exercise caution.");
-        } else if (patternCount <= 10) {
+        } else if (patternCount < 10) {
             speak("The page seems usable with fewer detected patterns.");
         }else{
             speak("This site is free of dark patterns.")
         }
         speak("Current number of patterns is " + patternCount);
         prevPatternCount = patternCount;
-        // console.log("speaking")
+        console.log("speaking")
     }
-    
-
-    return results;
 }
+
+
 
 function sendResults() {
     let results = getPatternsResults();
@@ -233,7 +273,7 @@ function showElement(phid) {
 
     setTimeout(() => {
         patternBox.remove();
-    }, 10000);
+    }, 100000);
 }
 
 function speak(message) {
